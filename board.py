@@ -258,6 +258,7 @@ class Chess:
 
     def check_move(self, p: Pawn, src, dest):
         if p.two_rank_possible and src[1] == dest[1] and (dest[0] - src[0] in [2,-2]):
+
             #perform a two rank move
 
 
