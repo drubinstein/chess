@@ -29,13 +29,13 @@ class Chess:
         self.board = []
         #Top is black
         self.board.append([Rook(Piece.Color.BLACK)   \
-                         , Knight(Piece.Color.BLACK) \
-                         , Bishop(Piece.Color.BLACK) \
-                         , Queen(Piece.Color.BLACK)  \
-                         , King(Piece.Color.BLACK)   \
-                         , Bishop(Piece.Color.BLACK) \
-                         , Knight(Piece.Color.BLACK) \
-                         , Rook(Piece.Color.BLACK)])
+                , Knight(Piece.Color.BLACK) \
+                , Bishop(Piece.Color.BLACK) \
+                , Queen(Piece.Color.BLACK)  \
+                , King(Piece.Color.BLACK)   \
+                , Bishop(Piece.Color.BLACK) \
+                , Knight(Piece.Color.BLACK) \
+                , Rook(Piece.Color.BLACK)])
         #row of black pawns
         self.board.append([Pawn(Piece.Color.BLACK) for _ in range(8)])
         #4 empty rows
@@ -44,13 +44,13 @@ class Chess:
         self.board.append([Pawn(Piece.Color.WHITE) for _ in range(8)])
         #Bottom row
         self.board.append([Rook(Piece.Color.WHITE)   \
-                         , Knight(Piece.Color.WHITE) \
-                         , Bishop(Piece.Color.WHITE) \
-                         , Queen(Piece.Color.WHITE)  \
-                         , King(Piece.Color.WHITE)   \
-                         , Bishop(Piece.Color.WHITE) \
-                         , Knight(Piece.Color.WHITE) \
-                         , Rook(Piece.Color.WHITE)])
+                , Knight(Piece.Color.WHITE) \
+                , Bishop(Piece.Color.WHITE) \
+                , Queen(Piece.Color.WHITE)  \
+                , King(Piece.Color.WHITE)   \
+                , Bishop(Piece.Color.WHITE) \
+                , Knight(Piece.Color.WHITE) \
+                , Rook(Piece.Color.WHITE)])
 
     def print(self):
         """Print the current board to terminal"""
@@ -154,7 +154,7 @@ class Chess:
     #This may not be possible without having other returns to allow for moves like castle and en passant
     #Sigh...castle and en passant
 
-    def check_move(self, p : Rook, src, dest):
+    def check_move(self, p : Rook, src, dest) -> ErrorCodes:
         #check to see if one axis is constant between src and dest
         #then check to see there are no pieces in the way
         if src[0] == dest[0]:
@@ -178,7 +178,7 @@ class Chess:
 
         return ErrorCodes.NONE
 
-    def check_move(self, p : Bishop, src, dest):
+    def check_move(self, p : Bishop, src, dest) -> ErrorCodes:
         #check to make sure the slope is either 1 or -1
         num = src[0] - dest[0]
         denom = src[1] - dest[1]
@@ -202,21 +202,20 @@ class Chess:
 
         return ErrorCodes.NONE
 
-    def check_move(self, p : Queen, src, dest):
+    def check_move(self, p : Queen, src, dest) -> ErrorCodes:
         old_board = self.board
 
-        if check_move(Bishop(self.current_player), src, dest) == ErrorCodes.None:
-            self.board[dest[0][dest[1]] = p
+        if check_move(Bishop(self.current_player), src, dest) == ErrorCodes.NONE:
+            self.board[dest[0]][dest[1]] = p
             return ErrorCodes.NONE
 
         self.board = old_board
-        if check_move(Rook(self.current_player, castle_possible=False), src, dest) == ErrorCodes.None:
-            self.board[dest[0][dest[1]] = p
+        if check_move(Rook(self.current_player, castle_possible=False), src, dest) == ErrorCoes.NONE:
+            self.board[dest[0]][dest[1]] = p
             return ErrorCodes.NONE
-
         return ErrorCodes.INVALID_MOVE
 
-    def check_move(self, p: Knight, src, dest):
+    def check_move(self, p: Knight, src, dest) -> ErrorCodes:
         #check to see if the destination is either (+-1,+-2) or (+-2, +-1) away
         dy = src[0] - dest[0]
         dx = src[1] - dest[1]
@@ -229,10 +228,10 @@ class Chess:
 
         return ErrorCodes.NONE
 
-    def check_move(self, p: King, src, dest):
+    def check_move(self, p: King, src, dest) -> ErrorCodes:
 
-        #first check if the move is a castle
         """
+        #first check if the move is a castle
         old_board = self.board
         if p.castle_possible:
             #if moving left check if there's a rook in the left corner
@@ -258,7 +257,8 @@ class Chess:
 
     def check_move(self, p: Pawn, src, dest):
         if p.two_rank_possible and src[1] == dest[1] and (dest[0] - src[0] in [2,-2]):
+            pass
 
-            #perform a two rank move
+        #perform a two rank move
 
 
