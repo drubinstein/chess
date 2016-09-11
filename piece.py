@@ -30,7 +30,7 @@ class King(Piece):
 
     def __init__(self, color = Piece.Color.NONE):
         super(King, self).__init__(color)
-        self.castle_possible = True
+        self.castle_possible = True #set to false after the king's first move
 
     def get_string(self):
         return '♔' if self.color == Piece.Color.WHITE else '♚'
@@ -40,9 +40,10 @@ class Queen(Piece):
         return '♕' if self.color == Piece.Color.WHITE else '♛'
 
 class Rook(Piece):
-    def __init__(self, color = Piece.Color.NONE):
+    def __init__(self, color = Piece.Color.NONE, castle_possible = True):
         super(Rook, self).__init__(color)
-        self.castle_possible = True
+        self.castle_possible = castle_possible #Set to false after the rook's first move
+
     def get_string(self):
         return '♖' if self.color == Piece.Color.WHITE else '♜'
 
@@ -59,7 +60,7 @@ class Pawn(Piece):
         super(Pawn, self).__init__(color)
         self.enpassant_possible = True
         self.two_rank_possible = True
-        self.two_rank_last = False
+        self.two_rank_last = False #If the last move was a two rank move. Needed to check for en passant
 
     def get_string(self):
         return '♙' if self.color == Piece.Color.WHITE else '♟'
